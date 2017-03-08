@@ -11,24 +11,26 @@
 # Fique a vontade para contribuir com a evolucao deste programa.
 #
 #-----------------------------------------------------------------------------------------------
+BASEDIR=$(dirname "$0")
 #
 # Import functions and data.
-source data.cfg
-source variables.cfg
-source help.sh
+source $BASEDIR/data.cfg
+source $BASEDIR/variables.cfg
+source $BASEDIR/help.sh
 
 # Generate list of sip peers
-	$path_mysql $db -p$db_passwd -u$db_user -e "select name,callerid,canal from peers where canal like 'SIP%';" > sippeers.txt
+   $path_mysql $db -p$db_passwd -u$db_user -e "select name,callerid,canal from peers where canal like 'SIP%';" > sippeers.txt
 
 # Generate list of khomp peers
-	$path_mysql $db -p$db_passwd -u$db_user -e "select name,callerid,canal from peers where canal like 'KHOMP%';" > khomppeers.txt
+   $path_mysql $db -p$db_passwd -u$db_user -e "select name,callerid,canal from peers where canal like 'KHOMP%';" > khomppeers.txt
 
 # Create ramais dir and move files
 
-		[[ -d $web_dir/ramais ]] || mkdir $web_dir/ramais
+      [[ -d $web_dir/ramais ]] || mkdir $web_dir/ramais
 
-	$path_mv sippeers.txt khomppeers.txt $web_dir/ramais/.
+   $path_mv sippeers.txt $web_dir/ramais/.
+   $path_mv khomppeers.txt $web_dir/ramais/.
 
 # Acesse o IP do snep e use /ramais para acessar os arquivos.
-	echo 0
+   echo 0
 
